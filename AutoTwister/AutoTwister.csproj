@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net7.0-android;net7.0-ios;net7.0-maccatalyst</TargetFrameworks>
@@ -52,6 +52,7 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
+		<PackageReference Include="SQLiteNetExtensions" Version="2.1.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -61,16 +62,39 @@
 	  <None Remove="sqlite-net-pcl" />
 	  <None Remove="Common\Models\" />
 	  <None Remove="CommunityToolkit.Mvvm" />
+	  <None Remove="Resources\Fonts\ABeeZee-Italic.ttf" />
+	  <None Remove="Resources\Fonts\ABeeZee-Regular.ttf" />
+	  <None Remove="SQLiteNetExtensions" />
+	  <None Remove="Resources\Localization\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Common\" />
 	  <Folder Include="Common\View\" />
 	  <Folder Include="Common\ViewModel\" />
 	  <Folder Include="Common\Models\" />
+	  <Folder Include="Resources\Localization\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <MauiXaml Condition=" '$(EnableDefaultXamlItems)' == 'true' " Update="Common\View\MainPage.xaml">
 	    <SubType>Designer</SubType>
 	  </MauiXaml>
+	</ItemGroup>
+	<ItemGroup>
+	  <EmbeddedResource Update="Resources\Localization\Common.en-US.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Common.en-US.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Localization\Common.uk-UA.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>Common.uk-UA.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup>
+	  <BundleResource Update="Resources\Localization\Common.en-US.Designer.cs">
+	    <DependentUpon>Common.en-US.resx</DependentUpon>
+	  </BundleResource>
+	  <BundleResource Update="Resources\Localization\Common.uk-UA.Designer.cs">
+	    <DependentUpon>Common.uk-UA.resx</DependentUpon>
+	  </BundleResource>
 	</ItemGroup>
 </Project>

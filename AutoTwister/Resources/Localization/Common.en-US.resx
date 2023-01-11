@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<data name="LeftHandGreen" xml:space="preserve">
+		<value>left hand on green</value>
+    </data>
+	<data name="LeftHandYellow" xml:space="preserve">
+		<value>left hand on yellow</value>
+    </data>
+	<data name="LeftHandBlue" xml:space="preserve">
+		<value>left hand on blue</value>
+    </data>
+	<data name="LeftHandRed" xml:space="preserve">
+		<value>left hand on red</value>
+    </data>
+	<data name="LeftHandAir" xml:space="preserve">
+		<value>left hand on air</value>
+    </data>
+	<data name="LeftFootGreen" xml:space="preserve">
+		<value>left foot on green</value>
+    </data>
+	<data name="LeftFootYellow" xml:space="preserve">
+		<value>left foot on yellow</value>
+    </data>
+	<data name="LeftFootBlue" xml:space="preserve">
+		<value>left foot on blue</value>
+    </data>
+	<data name="LeftFootRed" xml:space="preserve">
+		<value>left foot on red</value>
+    </data>
+	<data name="LeftFootAir" xml:space="preserve">
+		<value>left foot on air</value>
+    </data>
+	<data name="RightHandGreen" xml:space="preserve">
+		<value>right hand on green</value>
+    </data>
+	<data name="RightHandYellow" xml:space="preserve">
+		<value>right hand on yellow</value>
+    </data>
+	<data name="RightHandBlue" xml:space="preserve">
+		<value>right hand on blue</value>
+    </data>
+	<data name="RightHandRed" xml:space="preserve">
+		<value>right hand on red</value>
+    </data>
+	<data name="RightHandAir" xml:space="preserve">
+		<value>right hand on air</value>
+    </data>
+	<data name="RightFootGreen" xml:space="preserve">
+		<value>right foot on green</value>
+    </data>
+	<data name="RightFootYellow" xml:space="preserve">
+		<value>right foot on yellow</value>
+    </data>
+	<data name="RightFootBlue" xml:space="preserve">
+		<value>right foot on blue</value>
+    </data>
+	<data name="RightFootRed" xml:space="preserve">
+		<value>right foot on red</value>
+    </data>
+	<data name="RightFootAir" xml:space="preserve">
+		<value>right foot on air</value>
+    </data>
+</root>
