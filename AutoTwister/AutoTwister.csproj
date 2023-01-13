@@ -89,12 +89,4 @@
 	    <LastGenOutput>Common.uk-UA.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
 	</ItemGroup>
-	<ItemGroup>
-	  <BundleResource Update="Resources\Localization\Common.en-US.Designer.cs">
-	    <DependentUpon>Common.en-US.resx</DependentUpon>
-	  </BundleResource>
-	  <BundleResource Update="Resources\Localization\Common.uk-UA.Designer.cs">
-	    <DependentUpon>Common.uk-UA.resx</DependentUpon>
-	  </BundleResource>
-	</ItemGroup>
 </Project>
