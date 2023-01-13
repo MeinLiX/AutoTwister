@@ -53,6 +53,7 @@
 		<PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
 		<PackageReference Include="SQLiteNetExtensions" Version="2.1.0" />
+		<PackageReference Include="CommunityToolkit.Maui" Version="3.1.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -66,6 +67,7 @@
 	  <None Remove="Resources\Fonts\ABeeZee-Regular.ttf" />
 	  <None Remove="SQLiteNetExtensions" />
 	  <None Remove="Resources\Localization\" />
+	  <None Remove="CommunityToolkit.Maui" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Common\" />

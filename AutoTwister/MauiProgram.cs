@@ -2,6 +2,7 @@
 using AutoTwister.Common.ViewModel;
 using AutoTwister.Common.View;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Maui;
 
 namespace AutoTwister;
 
@@ -12,6 +13,7 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
+            .UseMauiCommunityToolkit()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("ABeeZee-Regular.ttf", "ABeeZeeRegular");
