@@ -1,11 +1,14 @@
-﻿namespace AutoTwister.Common.View;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using AutoTwister.Common.ViewModel;
 
-public partial class MainPage : ContentPage
+namespace AutoTwister.Common.View;
+
+public partial class MainPage : BasePage<MainPageViewModel>
 {
-	public MainPage()
-	{
-		InitializeComponent();
-	}
+    public MainPage() : base() 
+    {
+        InitializeComponent();
+    }
 }
 
 
