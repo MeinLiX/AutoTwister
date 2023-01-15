@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 
@@ -16,11 +17,13 @@ namespace AutoTwister.Common.ViewModel
         {
             OpenUserManagerPageCommand = new Command(async () =>
             {
+                Debug.WriteLine($"[{nameof(OpenUserManagerPageCommand)}]");
                 await Shell.Current.GoToAsync(Constants.Route.UserManagerPage);
             });
 
             OpenLocalizationSettingPageCommand = new Command(async () =>
             {
+                Debug.WriteLine($"[{nameof(OpenLocalizationSettingPageCommand)}]");
                 await Shell.Current.GoToAsync(Constants.Route.LocalizationSettingPage);
             });
             

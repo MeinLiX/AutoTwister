@@ -18,7 +18,7 @@ namespace AutoTwister.Common.ViewModel
 
             AddUserCommand = new Command(() =>
             {
-
+                Debug.WriteLine($"[{nameof(AddUserCommand)}]");
             });
 
             RemoveUserCommand = new Command(async () =>
@@ -37,6 +37,7 @@ namespace AutoTwister.Common.ViewModel
 
             UpdateCommand = new Command(async () =>
             {
+                Debug.WriteLine($"[{nameof(UpdateCommand)}]");
                 Users = new HashSet<UserStatsModel>((await Database.GetApplicationSettings()).UserStats);
             });
 

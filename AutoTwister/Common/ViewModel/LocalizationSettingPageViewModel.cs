@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 
@@ -15,11 +16,13 @@ namespace AutoTwister.Common.ViewModel
         {
             SaveCommand = new Command(async () =>
             {
+                Debug.WriteLine($"[{nameof(SaveCommand)}]");
                 await Application.Current.MainPage.DisplayAlert("Warn!", "Save function not realised!", "Ok");
             });
 
             RunTestSpeechCommand = new Command(async () =>
             {
+                Debug.WriteLine($"[{nameof(RunTestSpeechCommand)}]");
                 await TextToSpeech.Default.SpeakAsync(TextForTestSpeech, new SpeechOptions()
                 {
                     Pitch = Pitch,
@@ -30,6 +33,7 @@ namespace AutoTwister.Common.ViewModel
 
             UpdateAndResetCommand = new Command(() =>
             {
+                Debug.WriteLine($"[{nameof(UpdateAndResetCommand)}]");
                 Task loadAsyncFields = new Task(async () =>
                 {
                     _avaliableLocales = await TextToSpeech.Default.GetLocalesAsync();
