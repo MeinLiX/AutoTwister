@@ -14,9 +14,9 @@ namespace AutoTwister.Common.Models
         public string Name { get; set; }
 
 
-        public string Pitch { get; set; }
+        public float Pitch { get; set; } = 1.0f;
 
-        public string Volume { get; set; }
+        public float Volume { get; set; } = 1.0f;
 
 
         [PrimaryKey]
@@ -24,11 +24,6 @@ namespace AutoTwister.Common.Models
 
         public LocaleModel()
         {
-        }
-
-        public LocaleModel(string language) : this(TextToSpeech.Default.GetLocalesAsync().Result.FirstOrDefault(l => l.Language == language))
-        {
-
         }
 
         public LocaleModel(Locale locale)

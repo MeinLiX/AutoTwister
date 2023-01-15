@@ -19,6 +19,7 @@ namespace AutoTwister.Common.ViewModel
 
             GoRootPageCommand = new Command(async () =>
             {
+                Debug.WriteLine($"[{nameof(GoRootPageCommand)}]");
                 await Shell.Current.GoToAsync(Constants.Route.MainPage);
             });
         }

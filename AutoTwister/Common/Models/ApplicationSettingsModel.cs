@@ -17,7 +17,7 @@ namespace AutoTwister.Common.Models
         public LocaleModel Locale { get; set; }
 
         [OneToMany]
-        public List<UserStatsModel> UserStats { get; set; }
+        public IEnumerable<UserStatsModel> UserStats { get; set; } = new List<UserStatsModel>();
 
         public ApplicationSettingsModel()
         {
