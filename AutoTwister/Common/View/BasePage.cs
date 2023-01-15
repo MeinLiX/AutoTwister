@@ -15,6 +15,12 @@ namespace AutoTwister.Common.View
         }
 
         public new TVM BindingContext => (TVM)base.BindingContext;
+
+        protected override bool OnBackButtonPressed()
+        {
+            BindingContext.GoRootPageCommand.Execute(null);
+            return true;
+        }
     }
 
     public abstract class BasePage : ContentPage
