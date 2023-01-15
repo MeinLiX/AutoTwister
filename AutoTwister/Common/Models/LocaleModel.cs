@@ -13,6 +13,12 @@ namespace AutoTwister.Common.Models
 
         public string Name { get; set; }
 
+
+        public string Pitch { get; set; }
+
+        public string Volume { get; set; }
+
+
         [PrimaryKey]
         public string Id { get; set; }
 
@@ -20,8 +26,18 @@ namespace AutoTwister.Common.Models
         {
         }
 
+        public LocaleModel(string language) : this(TextToSpeech.Default.GetLocalesAsync().Result.FirstOrDefault(l => l.Language == language))
+        {
+
+        }
+
         public LocaleModel(Locale locale)
         {
+            if (locale is null)
+            {
+                throw new Exception("Selected locale not supported you device.");
+            }
+
             Language = locale.Language;
             Country = locale.Country;
             Name = locale.Name;
@@ -29,9 +45,9 @@ namespace AutoTwister.Common.Models
         }
 
         public async Task<Locale> GetLocale()
-            => (await TextToSpeech.GetLocalesAsync()).First(l => l.Id == Id);
-
-
+            => (await TextToSpeech.Default.GetLocalesAsync())
+               .FirstOrDefault(l => l.Id == Id)
+                ?? throw new Exception("Selected locale not supported you device.");
     }
 }
 

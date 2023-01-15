@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AutoTwister.Common.ViewModel
@@ -8,9 +9,24 @@ namespace AutoTwister.Common.ViewModel
         [ObservableProperty]
         private Microsoft.Maui.Graphics.Color background = Microsoft.Maui.Graphics.Color.FromArgb("#F2F3F4");
 
-        public MainPageViewModel()
+        public ICommand OpenUserManagerPageCommand { get; }
+        public ICommand OpenLocalizationSettingPageCommand { get; }
+
+        public MainPageViewModel():base()
         {
+            OpenUserManagerPageCommand = new Command(async () =>
+            {
+                await Shell.Current.GoToAsync(Constants.Route.UserManagerPage);
+            });
+
+            OpenLocalizationSettingPageCommand = new Command(async () =>
+            {
+                await Shell.Current.GoToAsync(Constants.Route.LocalizationSettingPage);
+            });
+            
         }
+
+        
     }
 }
 

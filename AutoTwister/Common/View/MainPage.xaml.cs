@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Mvvm.DependencyInjection;
-using AutoTwister.Common.ViewModel;
+﻿using AutoTwister.Common.ViewModel;
 
 namespace AutoTwister.Common.View;
 

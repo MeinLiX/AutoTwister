@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<view:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               x:Class="AutoTwister.Common.View.LocalizationSettingPage"
+               xmlns:view="clr-namespace:AutoTwister.Common.View"
+               xmlns:viewModels="clr-namespace:AutoTwister.Common.ViewModel"
+               x:TypeArguments="viewModels:LocalizationSettingPageViewModel"
+               x:DataType="viewModels:LocalizationSettingPageViewModel"
+               xmlns:mauiMedia="clr-namespace:Microsoft.Maui.Media;assembly=Microsoft.Maui.Essentials">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="400"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
+        </Grid.RowDefinitions>
+        <HorizontalStackLayout Grid.Row="0"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Start" >
+            <Entry Text="{Binding FilterLocale}"
+                   Placeholder="Type locale filter"
+                   Margin="0,10,0,10"
+                   VerticalOptions="Start" 
+                   HorizontalOptions="Center"
+                   WidthRequest="300"/>
+            <Button Text="Update"
+                    FontSize="18"
+                    Margin="5,10,0,10"
+                    VerticalOptions="Start" 
+                    HorizontalOptions="End"
+                    Command="{Binding UpdateAndResetCommand}"/>
+        </HorizontalStackLayout>
+
+
+        <Frame Grid.Row="1"
+               Padding="0"
+               HorizontalOptions="Center"
+               VerticalOptions="Center">
+            <ListView ItemsSource="{Binding LocalesWithFilter}"
+                      SelectedItem="{Binding SelectedLocale}"
+                      HorizontalOptions="Center">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="mauiMedia:Locale">
+                        <ViewCell>
+                            <Grid ColumnDefinitions="auto,auto,auto,auto" HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label Grid.Column="0" Text="{Binding Country, TargetNullValue=''}" Margin="0"/>
+                                <Label Grid.Column="1" Text="{Binding Language, TargetNullValue=''}" Margin="5,0,0,0"/>
+                                <Label Grid.Column="2" Text="{Binding Name, TargetNullValue=''}" Margin="5,0,0,0"/>
+                                <Label Grid.Column="3" Text="{Binding Id, TargetNullValue=''}" Margin="5,0,0,0"/>
+                            </Grid>
+                                
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Frame>
+
+        <VerticalStackLayout Spacing="20"
+                             Grid.Row="2"
+                             Padding="30,0"
+                             VerticalOptions="Center">
+            <Editor Text="{Binding TextForTestSpeech}"
+                    Placeholder="Type text for speech"
+                    AutoSize="TextChanges"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center"
+                    MinimumWidthRequest="200"/>
+            <Frame>
+                <VerticalStackLayout Spacing="20"
+                                     Grid.Row="2"
+                                     Padding="30,0"
+                                     VerticalOptions="Center">
+                    <Slider x:Name="sliderPitch"
+                            Maximum="2"
+                            Value="{Binding Pitch}"/>
+                    <Label Text="{Binding Pitch, StringFormat='Pitch: {0:0.000}'}"
+                           HorizontalOptions="Center"/>
+                    <Slider x:Name="sliderVolume"
+                            Maximum="1"
+                            Value="{Binding Volume}"/>
+                    <Label Text="{Binding Volume, StringFormat='Volume: {0:0.000}'}"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
+
+        <HorizontalStackLayout Spacing="20"
+                               Grid.Row="3"
+                               VerticalOptions="Center" 
+                               HorizontalOptions="Center">
+            <Button Text="Speech"
+                    FontSize="24"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center"
+                    Command="{Binding RunTestSpeechCommand}"/>
+            <Button Text="Save"
+                    FontSize="24"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center"
+                    Command="{Binding SaveCommand}"/>
+        </HorizontalStackLayout>
+    </Grid>
+</view:BasePage>

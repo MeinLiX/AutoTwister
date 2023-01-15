@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<view:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               x:Class="AutoTwister.Common.View.UserManagerPage"
+               xmlns:view="clr-namespace:AutoTwister.Common.View"
+               xmlns:viewModels="clr-namespace:AutoTwister.Common.ViewModel"
+               x:TypeArguments="viewModels:UserManagerPageViewModel"
+               x:DataType="viewModels:UserManagerPageViewModel">
+    <VerticalStackLayout>
+        <Label 
+            Text="Welcome to USERS settings"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+
+        <ListView Grid.Row="1" ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid Padding="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            
+                            <Label Grid.Column="0" Text="1"/>
+                            <Label Grid.Column="1" Text="2" />
+                            
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </VerticalStackLayout>
+</view:BasePage>

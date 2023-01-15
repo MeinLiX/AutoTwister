@@ -3,6 +3,7 @@ using AutoTwister.Common.ViewModel;
 using AutoTwister.Common.View;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Maui;
+using AutoTwister.Common.Services;
 
 namespace AutoTwister;
 
@@ -29,6 +30,7 @@ public static class MauiProgram
 
         builder.Services.RegisterViewModels();
 
+        builder.Services.AddSingleton<Database>();
 
 
         var mauiApp = builder.Build();
@@ -41,6 +43,8 @@ public static class MauiProgram
     private static void RegisterViewModels(this IServiceCollection services)
     {
         services.AddTransient<MainPageViewModel>();
+        services.AddTransient<UserManagerPageViewModel>();
+        services.AddTransient<LocalizationSettingPageViewModel>();
     }
 }
 

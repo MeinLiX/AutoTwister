@@ -33,6 +33,16 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
 	  <CreatePackage>false</CreatePackage>
 	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios|AnyCPU'">
+	  <CreatePackage>false</CreatePackage>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android|AnyCPU'">
+	  <AndroidPackageFormat>apk</AndroidPackageFormat>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+	  <DebugSymbols>true</DebugSymbols>
+	  <WarningLevel>4</WarningLevel>
+	</PropertyGroup>
 	<ItemGroup>
 		<!-- App Icon -->
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#f8bbd0" />
@@ -68,6 +78,7 @@
 	  <None Remove="SQLiteNetExtensions" />
 	  <None Remove="Resources\Localization\" />
 	  <None Remove="CommunityToolkit.Maui" />
+	  <None Remove="Common\Services\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Common\" />
@@ -75,10 +86,17 @@
 	  <Folder Include="Common\ViewModel\" />
 	  <Folder Include="Common\Models\" />
 	  <Folder Include="Resources\Localization\" />
+	  <Folder Include="Common\Services\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <MauiXaml Condition=" '$(EnableDefaultXamlItems)' == 'true' " Update="Common\View\MainPage.xaml">
 	    <SubType>Designer</SubType>
+	  </MauiXaml>
+	  <MauiXaml Update="Common\View\UserManagerPage.xaml">
+	    <SubType></SubType>
+	  </MauiXaml>
+	  <MauiXaml Update="Common\View\LocalizationSettingPage.xaml">
+	    <SubType></SubType>
 	  </MauiXaml>
 	</ItemGroup>
 	<ItemGroup>
