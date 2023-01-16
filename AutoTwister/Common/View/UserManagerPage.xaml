@@ -10,10 +10,11 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition Height="80"></RowDefinition>
         </Grid.RowDefinitions>
         <Frame Grid.Row="0"
                Padding="0"
+               Margin="10"
                HorizontalOptions="Center"
                VerticalOptions="Center">
             <ListView ItemsSource="{Binding Users}"
@@ -23,8 +24,18 @@
                     <DataTemplate x:DataType="models:UserStatsModel">
                         <ViewCell>
                             <Grid ColumnDefinitions="auto,auto,auto,auto" HorizontalOptions="Center" VerticalOptions="Center">
-                                <Label Grid.Column="0" Text="{Binding Name, TargetNullValue=''}" Margin="0"/>
-                                <Label Grid.Column="1" Text="{Binding WinCount, TargetNullValue='',StringFormat='{0} times wins'}" Margin="5,0,0,0"/>
+                                <Label Grid.Column="0"
+                                       Text="{Binding Name, TargetNullValue=''}"
+                                       FontSize="32"
+                                       Margin="0"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                                <Label Grid.Column="1"
+                                       Text="{Binding WinCount, TargetNullValue='',StringFormat='({0} times wins)'}"
+                                       FontSize="24"
+                                       Margin="5,0,0,0"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
@@ -41,7 +52,7 @@
                     VerticalOptions="Center" 
                     HorizontalOptions="Center"
                     Command="{Binding AddUserCommand}"/>
-            <Button Text="Remove User"
+            <Button Text="Remove User" 
                     FontSize="24"
                     VerticalOptions="Center" 
                     HorizontalOptions="Center"
