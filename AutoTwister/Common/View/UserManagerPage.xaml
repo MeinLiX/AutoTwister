@@ -4,32 +4,49 @@
                x:Class="AutoTwister.Common.View.UserManagerPage"
                xmlns:view="clr-namespace:AutoTwister.Common.View"
                xmlns:viewModels="clr-namespace:AutoTwister.Common.ViewModel"
+               xmlns:models="clr-namespace:AutoTwister.Common.Models"
                x:TypeArguments="viewModels:UserManagerPageViewModel"
                x:DataType="viewModels:UserManagerPageViewModel">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to USERS settings"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Frame Grid.Row="0"
+               Padding="0"
+               HorizontalOptions="Center"
+               VerticalOptions="Center">
+            <ListView ItemsSource="{Binding Users}"
+                      SelectedItem="{Binding SelectedUser}"
+                      HorizontalOptions="Center">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:UserStatsModel">
+                        <ViewCell>
+                            <Grid ColumnDefinitions="auto,auto,auto,auto" HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label Grid.Column="0" Text="{Binding Name, TargetNullValue=''}" Margin="0"/>
+                                <Label Grid.Column="1" Text="{Binding WinCount, TargetNullValue='',StringFormat='{0} times wins'}" Margin="5,0,0,0"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Frame>
 
-        <ListView Grid.Row="1" ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <Grid Padding="10">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-
-                            
-                            <Label Grid.Column="0" Text="1"/>
-                            <Label Grid.Column="1" Text="2" />
-                            
-                        </Grid>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </VerticalStackLayout>
+        <HorizontalStackLayout Spacing="20"
+                               Grid.Row="1"
+                               VerticalOptions="Center" 
+                               HorizontalOptions="Center">
+            <Button Text="Add User"
+                    FontSize="24"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center"
+                    Command="{Binding AddUserCommand}"/>
+            <Button Text="Remove User"
+                    FontSize="24"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center"
+                    Command="{Binding RemoveUserCommand}"
+                    IsEnabled="{Binding IsSelectedUser}"/>
+        </HorizontalStackLayout>
+    </Grid>
 </view:BasePage>

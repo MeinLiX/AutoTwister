@@ -1,27 +1,29 @@
 ﻿using System;
 using SQLite;
 using AutoTwister.Common.Models;
+using SQLiteNetExtensions.Extensions;
 
 namespace AutoTwister.Common.Services
 {
     public class Database
     {
-        private SQLiteAsyncConnection connection;
+        private SQLiteConnection connection;
 
         public Database()
         {
         }
 
-        private async Task InitialDataBase()
+        private void InitialDataBase()
         {
             if (connection is not null)
                 return;
 
-            connection = new SQLiteAsyncConnection(Constants.DatabasePath, Constants.SQLiteFlags);
+            connection = new SQLiteConnection(Constants.DatabasePath, Constants.SQLiteFlags);
+            connection.EnableWriteAheadLogging();
 
-            await connection.CreateTableAsync<ApplicationSettingsModel>();
-            await connection.CreateTableAsync<LocaleModel>();
-            await connection.CreateTableAsync<UserStatsModel>();
+            connection.CreateTable<ApplicationSettingsModel>();
+            connection.CreateTable<LocaleModel>();
+            connection.CreateTable<UserStatsModel>();
         }
 
         #region ApplicationSettings
@@ -29,11 +31,11 @@ namespace AutoTwister.Common.Services
         /// Get or create settings.
         /// Only one settings object can be in db.
         /// </summary>
-        public async Task<ApplicationSettingsModel> GetApplicationSettings()
+        public ApplicationSettingsModel GetApplicationSettings()
         {
-            await InitialDataBase();
+            InitialDataBase();
 
-            ApplicationSettingsModel applicationSettings = await connection.Table<ApplicationSettingsModel>().FirstOrDefaultAsync();
+            ApplicationSettingsModel applicationSettings = connection.GetAllWithChildren<ApplicationSettingsModel>().FirstOrDefault();
             if (applicationSettings is not null)
             {
                 return applicationSettings;
@@ -42,13 +44,13 @@ namespace AutoTwister.Common.Services
             {
                 applicationSettings = new ApplicationSettingsModel();
 
-                await connection.InsertAsync(applicationSettings);
+                connection.InsertOrReplace(applicationSettings);
 
                 return applicationSettings;
             }
         }
 
-        public async Task<ApplicationSettingsModel> SaveLocale(LocaleModel newlocale)
+        public ApplicationSettingsModel SaveLocale(LocaleModel newlocale)
         {
             if (newlocale is null) throw new NullReferenceException(nameof(newlocale));
             if (string.IsNullOrEmpty(newlocale.Id))
@@ -56,46 +58,49 @@ namespace AutoTwister.Common.Services
                 newlocale.Id = Guid.NewGuid().ToString();
             }
 
-            var appSettings = await GetApplicationSettings();
+            var appSettings = GetApplicationSettings();
 
-            if (appSettings.Locale is not null && !string.Equals(appSettings.Locale.Id, newlocale.Id))
+            if (appSettings.Locale is not null && !string.Equals(appSettings?.Locale?.Id, newlocale?.Id))
             {
-                await connection.DeleteAsync(appSettings.Locale);
+                connection.Delete(appSettings.Locale);
             }
 
-            await connection.InsertOrReplaceAsync(newlocale);
-
+            connection.InsertOrReplace(newlocale);
+            appSettings.LocaleId = newlocale.Id;
             appSettings.Locale = newlocale;
-            await connection.UpdateAsync(appSettings);
+            connection.Update(appSettings);
             return appSettings;
 
         }
 
-        public async Task<ApplicationSettingsModel> AddOrUpdateUser(UserStatsModel userModel)
+        public ApplicationSettingsModel AddOrUpdateUser(UserStatsModel userModel)
         {
             if (userModel is null) throw new NullReferenceException(nameof(userModel));
 
-            var appSettings = await GetApplicationSettings();
+            var appSettings = GetApplicationSettings();
 
-            await connection.InsertOrReplaceAsync(userModel);
+            userModel.ApplicationSettingsId = appSettings.Id;
+
+            connection.InsertOrReplace(userModel);
 
             var userFounded = appSettings.UserStats.FirstOrDefault(u => u.Id == userModel.Id);
 
             if (userFounded is not null)
             {
                 appSettings.UserStats.Remove(userFounded);
+                connection.Delete(userFounded);
             }
 
             appSettings.UserStats.Append(userModel);
-            await connection.UpdateAsync(appSettings);
+            connection.Update(appSettings);
             return appSettings;
         }
 
-        public async Task<ApplicationSettingsModel> RemoveUser(UserStatsModel userModel)
+        public ApplicationSettingsModel RemoveUser(UserStatsModel userModel)
         {
             if (userModel is null) throw new NullReferenceException(nameof(userModel));
 
-            var appSettings = await GetApplicationSettings();
+            var appSettings = GetApplicationSettings();
 
             var userFounded = appSettings.UserStats.FirstOrDefault(u => u.Id == userModel.Id);
 
@@ -105,10 +110,7 @@ namespace AutoTwister.Common.Services
             }
 
             appSettings.UserStats.Remove(userFounded);
-
-            await connection.DeleteAsync(userModel);
-
-            await connection.UpdateAsync(appSettings);
+            connection.UpdateWithChildren(appSettings);
             return appSettings;
         }
         #endregion

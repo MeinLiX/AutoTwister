@@ -7,6 +7,9 @@ namespace AutoTwister.Common.Models
     [Table(nameof(LocaleModel))]
     public class LocaleModel
     {
+        [PrimaryKey]
+        public string Id { get; set; }
+
         public string Language { get; set; }
 
         public string Country { get; set; }
@@ -18,9 +21,6 @@ namespace AutoTwister.Common.Models
 
         public float Volume { get; set; } = 1.0f;
 
-
-        [PrimaryKey]
-        public string Id { get; set; }
 
         public LocaleModel()
         {

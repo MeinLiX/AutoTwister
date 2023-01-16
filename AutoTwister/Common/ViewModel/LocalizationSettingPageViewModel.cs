@@ -3,49 +3,57 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace AutoTwister.Common.ViewModel
 {
     public partial class LocalizationSettingPageViewModel : BaseViewModel
     {
         private IEnumerable<Locale> _avaliableLocales=new ObservableCollection<Locale>();
-        public ICommand SaveCommand { get; }
-        public ICommand RunTestSpeechCommand { get; }
-        public ICommand UpdateAndResetCommand { get; }
         public LocalizationSettingPageViewModel() : base()
         {
-            SaveCommand = new Command(async () =>
-            {
-                Debug.WriteLine($"[{nameof(SaveCommand)}]");
-                await Application.Current.MainPage.DisplayAlert("Warn!", "Save function not realised!", "Ok");
-            });
-
-            RunTestSpeechCommand = new Command(async () =>
-            {
-                Debug.WriteLine($"[{nameof(RunTestSpeechCommand)}]");
-                await TextToSpeech.Default.SpeakAsync(TextForTestSpeech, new SpeechOptions()
-                {
-                    Pitch = Pitch,
-                    Volume = Volume,
-                    Locale = SelectedLocale
-                });
-            });
-
-            UpdateAndResetCommand = new Command(() =>
-            {
-                Debug.WriteLine($"[{nameof(UpdateAndResetCommand)}]");
-                Task loadAsyncFields = new Task(async () =>
-                {
-                    _avaliableLocales = await TextToSpeech.Default.GetLocalesAsync();
-                    OnPropertyChanged(nameof(LocalesWithFilter));
-                });
-                loadAsyncFields.Start();
-
-                Pitch = 1f;
-                Volume = 1f;
-            });
             UpdateAndResetCommand.Execute(null);
         }
+
+        #region commands
+
+        [RelayCommand]
+        private async Task Save()
+        {
+            Debug.WriteLine($"[{nameof(SaveCommand)}]");
+            await Application.Current.MainPage.DisplayAlert("Warn!", "Save function not realised!", "Ok");
+        }
+
+        [RelayCommand]
+        private async Task RunTestSpeech()
+        {
+            Debug.WriteLine($"[{nameof(RunTestSpeechCommand)}]");
+            await TextToSpeech.Default.SpeakAsync(TextForTestSpeech, new SpeechOptions()
+            {
+                Pitch = Pitch,
+                Volume = Volume,
+                Locale = SelectedLocale
+            });
+        }
+
+        [RelayCommand]
+        private async Task UpdateAndReset()
+        {
+            Debug.WriteLine($"[{nameof(UpdateAndResetCommand)}]");
+            Task loadAsyncFields = new Task(async () =>
+            {
+                _avaliableLocales = await TextToSpeech.Default.GetLocalesAsync();
+                OnPropertyChanged(nameof(LocalesWithFilter));
+            });
+            loadAsyncFields.Start();
+
+            Pitch = 1f;
+            Volume = 1f;
+        }
+
+        #endregion commands
+
+        #region properties
 
         [ObservableProperty]
         private string _textForTestSpeech = string.Empty;
@@ -96,6 +104,8 @@ namespace AutoTwister.Common.ViewModel
                 }
             }
         }
+
+        #endregion properties
     }
 }
 
