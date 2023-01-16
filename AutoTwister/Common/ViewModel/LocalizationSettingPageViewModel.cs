@@ -9,10 +9,18 @@ namespace AutoTwister.Common.ViewModel
 {
     public partial class LocalizationSettingPageViewModel : BaseViewModel
     {
-        private IEnumerable<Locale> _avaliableLocales=new ObservableCollection<Locale>();
+        private IEnumerable<Locale> _avaliableLocales = new ObservableCollection<Locale>();
         public LocalizationSettingPageViewModel() : base()
         {
             UpdateAndResetCommand.Execute(null);
+
+            var appSettings = Database.GetApplicationSettings();
+            if (appSettings.Locale is not null)
+            {
+                Pitch = appSettings.Locale.Pitch;
+                Volume = appSettings.Locale.Volume;
+                SelectedLocale = appSettings.Locale.GetLocale().Result;
+            }
         }
 
         #region commands
@@ -21,7 +29,15 @@ namespace AutoTwister.Common.ViewModel
         private async Task Save()
         {
             Debug.WriteLine($"[{nameof(SaveCommand)}]");
-            await Application.Current.MainPage.DisplayAlert("Warn!", "Save function not realised!", "Ok");
+            if (IsSelectedLocale)
+            {
+                Database.SaveLocale(new Models.LocaleModel(SelectedLocale) { Pitch = this.Pitch, Volume = this.Volume });
+                await Application.Current.MainPage.DisplayAlert("Result!", "Save is done!", "OK");
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("Fail!", "need select locale!", "OK");
+            }
         }
 
         [RelayCommand]
@@ -40,6 +56,8 @@ namespace AutoTwister.Common.ViewModel
         private async Task UpdateAndReset()
         {
             Debug.WriteLine($"[{nameof(UpdateAndResetCommand)}]");
+            
+            
             Task loadAsyncFields = new Task(async () =>
             {
                 _avaliableLocales = await TextToSpeech.Default.GetLocalesAsync();
@@ -47,8 +65,18 @@ namespace AutoTwister.Common.ViewModel
             });
             loadAsyncFields.Start();
 
+            var appSettings = Database.GetApplicationSettings();
+            if (appSettings.Locale is not null)
+            {
+                Pitch = appSettings.Locale.Pitch;
+                Volume = appSettings.Locale.Volume;
+                SelectedLocale = await appSettings.Locale.GetLocale(); //Перевірити, чомусь не працює збережений голос
+            }
+            else
+            {
             Pitch = 1f;
             Volume = 1f;
+            }
         }
 
         #endregion commands
