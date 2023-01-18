@@ -13,14 +13,6 @@ namespace AutoTwister.Common.ViewModel
         public LocalizationSettingPageViewModel() : base()
         {
             UpdateAndResetCommand.Execute(null);
-
-            var appSettings = Database.GetApplicationSettings();
-            if (appSettings.Locale is not null)
-            {
-                Pitch = appSettings.Locale.Pitch;
-                Volume = appSettings.Locale.Volume;
-                SelectedLocale = appSettings.Locale.GetLocale().Result;
-            }
         }
 
         #region commands
@@ -56,14 +48,9 @@ namespace AutoTwister.Common.ViewModel
         private async Task UpdateAndReset()
         {
             Debug.WriteLine($"[{nameof(UpdateAndResetCommand)}]");
-            
-            
-            Task loadAsyncFields = new Task(async () =>
-            {
-                _avaliableLocales = await TextToSpeech.Default.GetLocalesAsync();
-                OnPropertyChanged(nameof(LocalesWithFilter));
-            });
-            loadAsyncFields.Start();
+
+            _avaliableLocales = await TextToSpeech.Default.GetLocalesAsync();
+            OnPropertyChanged(nameof(LocalesWithFilter));
 
             var appSettings = Database.GetApplicationSettings();
             if (appSettings.Locale is not null)
@@ -74,8 +61,8 @@ namespace AutoTwister.Common.ViewModel
             }
             else
             {
-            Pitch = 1f;
-            Volume = 1f;
+                Pitch = 1f;
+                Volume = 1f;
             }
         }
 
