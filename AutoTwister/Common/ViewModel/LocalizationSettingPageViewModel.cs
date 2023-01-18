@@ -21,14 +21,16 @@ namespace AutoTwister.Common.ViewModel
         private async Task Save()
         {
             Debug.WriteLine($"[{nameof(SaveCommand)}]");
-            if (IsSelectedLocale)
+            string savebtn = "Save";
+            string cancelbtn = "Cancel";
+            string action = await Application.Current.MainPage.DisplayActionSheet("Save", cancelbtn, savebtn, $"Save locale {SelectedLocale.Language}?");
+
+            if (string.Equals(action, savebtn))
             {
                 Database.SaveLocale(new Models.LocaleModel(SelectedLocale) { Pitch = this.Pitch, Volume = this.Volume });
                 await Application.Current.MainPage.DisplayAlert("Result!", "Save is done!", "OK");
-            }
-            else
-            {
-                await Application.Current.MainPage.DisplayAlert("Fail!", "need select locale!", "OK");
+                FilterLocale = string.Empty;
+                GoRootPageCommand.Execute(null);
             }
         }
 
@@ -57,7 +59,7 @@ namespace AutoTwister.Common.ViewModel
             {
                 Pitch = appSettings.Locale.Pitch;
                 Volume = appSettings.Locale.Volume;
-                SelectedLocale = await appSettings.Locale.GetLocale(); //Перевірити, чомусь не працює збережений голос
+                SelectedLocale = await appSettings.Locale.GetLocale(); //Перевірити, чомусь не працює збережений голос, поки не жмякнути кнопку апдейт
             }
             else
             {
