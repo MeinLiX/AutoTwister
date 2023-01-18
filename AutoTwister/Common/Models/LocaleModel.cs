@@ -39,9 +39,10 @@ namespace AutoTwister.Common.Models
             Id = locale.Id;
         }
 
+        //someone OS prop 'Id' possible null. (auto gen guid for save in db)
         public async Task<Locale> GetLocale()
             => (await TextToSpeech.Default.GetLocalesAsync())
-               .FirstOrDefault(l => l.Id == Id)
+               .FirstOrDefault(l => (l.Id == Id) || (l.Language == Language && l.Country == Country && l.Name == Name))
                 ?? throw new Exception("Selected locale not supported you device.");
     }
 }
