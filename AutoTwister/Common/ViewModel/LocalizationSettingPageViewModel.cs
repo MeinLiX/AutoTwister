@@ -21,11 +21,8 @@ namespace AutoTwister.Common.ViewModel
         private async Task Save()
         {
             Debug.WriteLine($"[{nameof(SaveCommand)}]");
-            string savebtn = "Save";
-            string cancelbtn = "Cancel";
-            string action = await Application.Current.MainPage.DisplayActionSheet("Save", cancelbtn, savebtn, $"Save locale {SelectedLocale.Language}?");
 
-            if (string.Equals(action, savebtn))
+            if (await Application.Current.MainPage.DisplayAlert("Save", $"Save locale {SelectedLocale.Language}?", "Save", "Cancel"))
             {
                 Database.SaveLocale(new Models.LocaleModel(SelectedLocale) { Pitch = this.Pitch, Volume = this.Volume });
                 await Application.Current.MainPage.DisplayAlert("Result!", "Save is done!", "OK");

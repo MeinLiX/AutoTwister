@@ -46,13 +46,9 @@ namespace AutoTwister.Common.ViewModel
         [RelayCommand]
         private async Task RemoveUser()
         {
-            string acceptbtn = "Remove";
-            string cancelbtn = "Cancel";
-            string action = await Application.Current.MainPage.DisplayActionSheet("Delete", cancelbtn, acceptbtn, $"Remove {SelectedUser.Name} user?");
+            Debug.WriteLine($"[{nameof(RemoveUserCommand)}]");
 
-            Debug.WriteLine($"[{nameof(RemoveUserCommand)}] Action: {action};");
-
-            if (string.Equals(action, acceptbtn))
+            if (await Application.Current.MainPage.DisplayAlert("Delete", $"Remove {SelectedUser.Name} user?", "Remove", "Cancel"))
             {
                 Database.RemoveUser(SelectedUser);
                 UpdateCommand.Execute(null);
