@@ -25,6 +25,14 @@ namespace AutoTwister.Common.ViewModel
         }
 
         [RelayCommand]
+        private async Task OpenGamePage()
+        {
+            Debug.WriteLine($"[{nameof(OpenGamePageCommand)}]");
+            await Shell.Current.GoToAsync(Constants.Route.GamePage);
+
+        }
+
+        [RelayCommand]
         private async Task OpenUserManagerPage()
         {
             Debug.WriteLine($"[{nameof(OpenUserManagerPageCommand)}]");

@@ -107,6 +107,9 @@
 	  <MauiXaml Update="Common\View\LocalizationSettingPage.xaml">
 	    <SubType></SubType>
 	  </MauiXaml>
+	  <MauiXaml Update="Common\View\GamePage.xaml">
+	    <SubType></SubType>
+	  </MauiXaml>
 	</ItemGroup>
 	<ItemGroup>
 	  <EmbeddedResource Update="Resources\Localization\Common.en-US.resx">

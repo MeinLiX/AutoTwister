@@ -23,12 +23,17 @@
                 FontSize="18"
                 HorizontalOptions="Center" />
 
-            <Button Text="Users"
+            <Button Text="Start"
+                    FontSize="32"
+                    HorizontalOptions="Center"
+                    Command="{Binding OpenGamePageCommand}"/>
+
+            <Button Text="Players"
                     FontSize="24"
                     HorizontalOptions="Center"
                     Command="{Binding OpenUserManagerPageCommand}"/>
 
-            <Button Text="Localization Settings"
+            <Button Text="Settings"
                     FontSize="24"
                     HorizontalOptions="Center"
                     Command="{Binding OpenLocalizationSettingPageCommand}"/>

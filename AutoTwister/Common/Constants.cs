@@ -16,6 +16,7 @@ namespace AutoTwister.Common
         public static class Route
         {
             public const string MainPage = $"//{nameof(View.MainPage)}";
+            public const string GamePage = $"//{nameof(View.GamePage)}";
             public const string UserManagerPage = $"//{nameof(View.UserManagerPage)}";
             public const string LocalizationSettingPage = $"//{nameof(View.LocalizationSettingPage)}";
         }

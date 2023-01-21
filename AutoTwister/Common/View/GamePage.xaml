@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<view:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               x:Class="AutoTwister.Common.View.GamePage"
+               xmlns:view="clr-namespace:AutoTwister.Common.View"
+               xmlns:viewModels="clr-namespace:AutoTwister.Common.ViewModel"
+               x:TypeArguments="viewModels:GamePageViewModel"
+               x:DataType="viewModels:GamePageViewModel">
+
+    <VerticalStackLayout>
+        <Label Text="Welcome to game Page!"
+               VerticalOptions="Center" 
+               HorizontalOptions="Center" />
+    </VerticalStackLayout>
+</view:BasePage>

@@ -8,17 +8,22 @@
     Shell.NavBarIsVisible="False">
 
     <ShellContent
-        Title="Home"
+        Title="Menu"
         ContentTemplate="{DataTemplate view:MainPage}"
         Route="MainPage" />
+
+    <ShellContent
+        Title="Game"
+        ContentTemplate="{DataTemplate view:GamePage}"
+        Route="GamePage" />
     
     <ShellContent
-        Title="Users"
+        Title="Players"
         ContentTemplate="{DataTemplate view:UserManagerPage}"
         Route="UserManagerPage" />
 
     <ShellContent
-        Title="Users"
+        Title="Localization Settign"
         ContentTemplate="{DataTemplate view:LocalizationSettingPage}"
         Route="LocalizationSettingPage" />
 </Shell>
