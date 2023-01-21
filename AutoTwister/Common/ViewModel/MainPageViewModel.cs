@@ -49,12 +49,6 @@ namespace AutoTwister.Common.ViewModel
 
         #endregion commands
 
-        #region properties
-
-        [ObservableProperty]
-        private Microsoft.Maui.Graphics.Color background = Microsoft.Maui.Graphics.Color.FromArgb("#F2F3F4");
-
-        #endregion properties
     }
 }
 

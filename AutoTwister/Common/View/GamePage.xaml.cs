@@ -1,6 +1,8 @@
-﻿namespace AutoTwister.Common.View;
+﻿using AutoTwister.Common.ViewModel;
 
-public partial class GamePage : BasePage<ViewModel.GamePageViewModel>
+namespace AutoTwister.Common.View;
+
+public partial class GamePage : BasePage<GamePageViewModel>
 {
 	public GamePage() : base()
     {

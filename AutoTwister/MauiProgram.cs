@@ -43,6 +43,7 @@ public static class MauiProgram
     private static void RegisterViewModels(this IServiceCollection services)
     {
         services.AddTransient<MainPageViewModel>();
+        services.AddTransient<GamePageViewModel>();
         services.AddTransient<UserManagerPageViewModel>();
         services.AddTransient<LocalizationSettingPageViewModel>();
     }

@@ -5,11 +5,29 @@
                xmlns:view="clr-namespace:AutoTwister.Common.View"
                xmlns:viewModels="clr-namespace:AutoTwister.Common.ViewModel"
                x:TypeArguments="viewModels:GamePageViewModel"
-               x:DataType="viewModels:GamePageViewModel">
+               x:DataType="viewModels:GamePageViewModel"
+               BackgroundColor="{Binding Background}">
 
-    <VerticalStackLayout>
-        <Label Text="Welcome to game Page!"
-               VerticalOptions="Center" 
-               HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <Grid RowDefinitions="80,*,80">
+        <HorizontalStackLayout Spacing="20"
+                               Grid.Row="3"
+                               VerticalOptions="Center" 
+                               HorizontalOptions="Center">
+        </HorizontalStackLayout>
+        <VerticalStackLayout Grid.Row="1">
+            <Label Text="Welcome to game Page!"
+                   VerticalOptions="Center" 
+                   HorizontalOptions="Center" />
+        </VerticalStackLayout>
+        <HorizontalStackLayout Spacing="20"
+                               Grid.Row="3"
+                               VerticalOptions="Center" 
+                               HorizontalOptions="Center">
+            <Button Text="Next step"
+                    FontSize="24"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center"
+                    Command="{Binding NextStepPageCommand}"/>
+        </HorizontalStackLayout>
+    </Grid>
 </view:BasePage>
