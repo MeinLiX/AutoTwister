@@ -9,18 +9,19 @@ using CommunityToolkit.Mvvm.Input;
 namespace AutoTwister.Common.ViewModel
 {
 
-    public partial class BaseViewModel : ObservableObject
+    public class BaseViewModel : ObservableObject
     {
         protected readonly Database Database;
 
         public BaseViewModel()
         {
             Database = Ioc.Default.GetService<Database>();
-
+            GoRootPageCommand = new AsyncRelayCommand(GoRootPageExecuteAsync);
         }
 
-        [RelayCommand]
-        private async Task GoRootPage()
+        public AsyncRelayCommand GoRootPageCommand { get; private set; }
+
+        private async Task GoRootPageExecuteAsync()
         {
             Debug.WriteLine($"[{nameof(GoRootPageCommand)}]");
             await Shell.Current.GoToAsync(Constants.Route.MainPage);
