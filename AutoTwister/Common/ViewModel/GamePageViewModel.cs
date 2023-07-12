@@ -5,16 +5,18 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace AutoTwister.Common.ViewModel
 {
-    public partial class GamePageViewModel : BaseViewModel
+    public class GamePageViewModel : BaseViewModel
     {
         public GamePageViewModel() : base()
         {
+            NextStepPageCommand = new AsyncRelayCommand(NextStepPageExecuteAsync);
         }
 
         #region commands
 
-        [RelayCommand]
-        private async Task NextStepPage()
+        public AsyncRelayCommand NextStepPageCommand { get; private set; }
+
+        private Task NextStepPageExecuteAsync()
         {
             Debug.WriteLine($"[{nameof(NextStepPageCommand)}]");
 
@@ -27,14 +29,21 @@ namespace AutoTwister.Common.ViewModel
                 6 or 7 => Constants.Colors.RedBG,
                 _ => Constants.Colors.AirBG
             };
+
+            return Task.CompletedTask;
         }
 
         #endregion commands
 
         #region properties
 
-        [ObservableProperty]
-        private Microsoft.Maui.Graphics.Color background = Microsoft.Maui.Graphics.Color.FromArgb("#F2F3F4");
+        private Color background = Microsoft.Maui.Graphics.Color.FromArgb("#F2F3F4");
+
+        public Color Background
+        {
+            get => this.background;
+            set => SetProperty(ref this.background, value);
+        }
 
         private Timer _timer;//TODO
 

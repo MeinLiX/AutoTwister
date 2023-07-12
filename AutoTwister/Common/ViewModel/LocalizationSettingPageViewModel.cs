@@ -7,18 +7,22 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace AutoTwister.Common.ViewModel
 {
-    public partial class LocalizationSettingPageViewModel : BaseViewModel
+    public class LocalizationSettingPageViewModel : BaseViewModel
     {
         private IEnumerable<Locale> _avaliableLocales = new ObservableCollection<Locale>();
         public LocalizationSettingPageViewModel() : base()
         {
+            SaveCommand = new AsyncRelayCommand(SaveExecuteAsync);
+            RunTestSpeechCommand = new AsyncRelayCommand(RunTestSpeechExecuteAsync);
+            UpdateAndResetCommand = new AsyncRelayCommand(UpdateAndResetExecuteAsync);
             UpdateAndResetCommand.Execute(null);
         }
 
         #region commands
 
-        [RelayCommand]
-        private async Task Save()
+        public AsyncRelayCommand SaveCommand { get; private set; }
+
+        private async Task SaveExecuteAsync()
         {
             Debug.WriteLine($"[{nameof(SaveCommand)}]");
 
@@ -31,8 +35,9 @@ namespace AutoTwister.Common.ViewModel
             }
         }
 
-        [RelayCommand]
-        private async Task RunTestSpeech()
+        public AsyncRelayCommand RunTestSpeechCommand { get; private set; }
+
+        private async Task RunTestSpeechExecuteAsync()
         {
             Debug.WriteLine($"[{nameof(RunTestSpeechCommand)}]");
             await TextToSpeech.Default.SpeakAsync(TextForTestSpeech, new SpeechOptions()
@@ -43,8 +48,9 @@ namespace AutoTwister.Common.ViewModel
             });
         }
 
-        [RelayCommand]
-        private async Task UpdateAndReset()
+        public AsyncRelayCommand UpdateAndResetCommand { get; private set; }
+
+        private async Task UpdateAndResetExecuteAsync()
         {
             Debug.WriteLine($"[{nameof(UpdateAndResetCommand)}]");
 
@@ -69,27 +75,54 @@ namespace AutoTwister.Common.ViewModel
 
         #region properties
 
-        [ObservableProperty]
-        private string _textForTestSpeech = string.Empty;
+        private string textForTestSpeech = string.Empty;
+
+        public string TextForTestSpeech
+        {
+            get => this.textForTestSpeech;
+            set => SetProperty(ref this.textForTestSpeech, value);
+        }
 
         //0.0-2.0
-        [ObservableProperty]
-        private float _pitch = 1f;
+        private float pitch = 1f;
+
+        public float Pitch
+        {
+            get => this.pitch;
+            set => SetProperty(ref this.pitch, value);
+        }
 
         //0.0-1.0
-        [ObservableProperty]
-        private float _volume = 1f;
+        private float volume = 1f;
 
-        public bool IsSelectedLocale { get => SelectedLocale is not null; }
+        public float Volume
+        {
+            get => this.volume;
+            set => SetProperty(ref this.volume, value);
+        }
 
-        [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(IsSelectedLocale))]
-        [NotifyPropertyChangedFor(nameof(TextForTestSpeech))]
-        private Locale _selectedLocale = null;
+        public bool IsLocaleSelected => SelectedLocale is not null; 
 
-        [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(LocalesWithFilter))]
-        private string _filterLocale = string.Empty;
+        private Locale selectedLocale = null;
+
+        public Locale SelectedLocale
+        {
+            get => this.selectedLocale;
+            set
+            {
+                SetProperty(ref this.selectedLocale, value);
+                base.OnPropertyChanged(nameof(IsLocaleSelected));
+                base.OnPropertyChanged(nameof(TextForTestSpeech));
+            }
+        }
+
+        private string filterLocale = string.Empty;
+
+        public string FilterLocale
+        {
+            get => this.filterLocale;
+            set => SetProperty(ref this.filterLocale, value, nameof(LocalesWithFilter));
+        }
 
         public HashSet<Locale> LocalesWithFilter
         {

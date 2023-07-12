@@ -98,7 +98,7 @@
                     VerticalOptions="Center" 
                     HorizontalOptions="Center"
                     Command="{Binding SaveCommand}"
-                    IsEnabled="{Binding IsSelectedLocale}"/>
+                    IsEnabled="{Binding IsLocaleSelected}"/>
         </HorizontalStackLayout>
     </Grid>
 </view:BasePage>

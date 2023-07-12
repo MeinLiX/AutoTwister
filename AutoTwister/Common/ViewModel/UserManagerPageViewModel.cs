@@ -8,26 +8,32 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace AutoTwister.Common.ViewModel
 {
-    public partial class UserManagerPageViewModel : BaseViewModel
+    public class UserManagerPageViewModel : BaseViewModel
     {
 
         public UserManagerPageViewModel()
         {
+            AddUserCommand = new AsyncRelayCommand(AddUserExecuteAsync);
+            RemoveUserCommand = new AsyncRelayCommand(RemoveUserExecuteAsync,
+                new Func<bool>(() => this.IsUserSelected));
+            UpdateCommand = new RelayCommand(UpdateExecute);
             UpdateCommand.Execute(null);
         }
 
         #region commands
 
-        [RelayCommand]
-        private void Update()
+        public RelayCommand UpdateCommand { get; private set; }
+
+        private void UpdateExecute()
         {
             Debug.WriteLine($"[{nameof(UpdateCommand)}]");
             Users = new HashSet<UserStatsModel>((Database.GetApplicationSettings()).UserStats);
 
         }
 
-        [RelayCommand]
-        private async Task AddUser()
+        public AsyncRelayCommand AddUserCommand { get; set; }
+
+        private async Task AddUserExecuteAsync()
         {
             Debug.WriteLine($"[{nameof(AddUserCommand)}]");
             string result = await Application.Current.MainPage.DisplayPromptAsync("Add User", "Enter user name.");
@@ -42,9 +48,9 @@ namespace AutoTwister.Common.ViewModel
             }
         }
 
-        //[RelayCommand(CanExecute = nameof(IsSelectedUser))] //CanExecute not work!!
-        [RelayCommand]
-        private async Task RemoveUser()
+        public AsyncRelayCommand RemoveUserCommand { get; private set; }
+
+        private async Task RemoveUserExecuteAsync()
         {
             Debug.WriteLine($"[{nameof(RemoveUserCommand)}]");
 
@@ -59,14 +65,23 @@ namespace AutoTwister.Common.ViewModel
 
         #region properties
 
-        public bool IsSelectedUser => SelectedUser is not null;
+        public bool IsUserSelected => SelectedUser is not null;
 
-        [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(IsSelectedUser))]
-        private UserStatsModel _selectedUser;
+        private UserStatsModel selectedUser;
 
-        [ObservableProperty]
-        private HashSet<UserStatsModel> _users;
+        public UserStatsModel SelectedUser
+        {
+            get => this.selectedUser;
+            set => SetProperty(ref this.selectedUser, value, nameof(IsUserSelected));
+        }
+
+        private HashSet<UserStatsModel> users;
+
+        public HashSet<UserStatsModel> Users
+        {
+            get => this.users;
+            set => SetProperty(ref this.users, value);
+        }
 
         #endregion properties
     }

@@ -57,7 +57,7 @@
                     VerticalOptions="Center" 
                     HorizontalOptions="Center"
                     Command="{Binding RemoveUserCommand}"
-                    IsEnabled="{Binding IsSelectedUser}"/>
+                    IsEnabled="{Binding IsUserSelected}"/>
         </HorizontalStackLayout>
     </Grid>
 </view:BasePage>
